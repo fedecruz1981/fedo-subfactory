@@ -1,0 +1,6 @@
+faster-whisper>=1.0.0
+yt-dlp>=2024.0.0
+pysrt>=1.1.0
+deep-translator>=1.11.0
+ctranslate2>=4.0.0
+srt>=3.5.0
