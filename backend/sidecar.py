@@ -1,6 +1,8 @@
 import sys
 import json
 import threading
+import shutil
+import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from .pipeline import ejecutar_pipeline
 from . import utilidades
@@ -14,6 +16,86 @@ def enviar_evento(evento):
         line = json.dumps(evento, ensure_ascii=False)
         sys.stdout.write(line + '\n')
         sys.stdout.flush()
+
+
+def doctor_report():
+    """Reporta el estado de las herramientas del sidecar al proceso principal."""
+    checks = []
+
+    checks.append({
+        'id': 'python',
+        'label': 'Python',
+        'required': True,
+        'status': 'ok',
+        'version': sys.version.split()[0],
+        'message': 'Python disponible.',
+        'hint': None,
+    })
+
+    # Verificar whisper (faster_whisper)
+    whisper_ok = False
+    whisper_version = None
+    try:
+        from faster_whisper import __version__ as fw_version
+        whisper_ok = True
+        whisper_version = fw_version
+    except ImportError:
+        pass
+    checks.append({
+        'id': 'faster_whisper',
+        'label': 'faster-whisper',
+        'required': True,
+        'status': 'ok' if whisper_ok else 'missing',
+        'version': whisper_version,
+        'message': ('faster-whisper disponible.' if whisper_ok
+                    else 'faster-whisper no está instalado. La transcripción fallará.'),
+        'hint': None if whisper_ok else 'pip install -U faster-whisper',
+    })
+
+    # Verificar ffmpeg
+    for tool in ('ffmpeg', 'ffprobe'):
+        exe = shutil.which(tool)
+        version = None
+        missing = exe is None
+        if exe:
+            try:
+                res = subprocess.run([exe, '-version'], capture_output=True, text=True, timeout=10)
+                out = (res.stdout or res.stderr) or ''
+                version = out.strip().splitlines()[0] if out.strip() else None
+                missing = res.returncode != 0
+            except Exception:
+                missing = True
+        label = 'FFmpeg' if tool == 'ffmpeg' else 'FFprobe'
+        checks.append({
+            'id': tool,
+            'label': label,
+            'required': True,
+            'status': 'missing' if missing else 'ok',
+            'version': version,
+            'message': (label + ' disponible.' if not missing
+                        else label + ' no está en el PATH. La transcripción y el renderizado fallarán.'),
+            'hint': None if not missing else 'https://ffmpeg.org/download.html',
+        })
+
+    # Verificar ctranslate2 (dependencia de faster_whisper)
+    ct2_ok = False
+    try:
+        import ctranslate2
+        ct2_ok = True
+    except ImportError:
+        pass
+    checks.append({
+        'id': 'ctranslate2',
+        'label': 'ctranslate2',
+        'required': True,
+        'status': 'ok' if ct2_ok else 'missing',
+        'version': getattr(ctranslate2, '__version__', None) if ct2_ok else None,
+        'message': ('ctranslate2 disponible.' if ct2_ok
+                    else 'ctranslate2 no está instalado. faster-whisper no funcionará.'),
+        'hint': None if ct2_ok else 'pip install -U ctranslate2',
+    })
+
+    enviar_evento({'type': 'doctor', 'checks': checks})
 
 def procesar_job(job_id, url, config, executor_ref):
     enviar_evento({
@@ -95,6 +177,7 @@ def procesar_comando(comando):
 def main():
     sys.stderr.write('Sidecar Python iniciado\n')
     sys.stderr.flush()
+    doctor_report()
 
     for linea in sys.stdin:
         linea = linea.strip()

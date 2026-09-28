@@ -46,7 +46,11 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
+      "backend/**/*",
       "package.json"
+    ],
+    "asarUnpack": [
+      "backend/**/*"
     ],
     "win": {
       "target": "nsis"

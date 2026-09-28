@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import EntradaURL from './componentes/EntradaURL'
 import ColaJobs from './componentes/ColaJobs'
 import Configuracion from './componentes/Configuracion'
+import DoctorBanner from './componentes/DoctorBanner'
 
 const CONFIGURACION_DEFAULT = {
   modelo_whisper: 'medium',
@@ -136,6 +137,7 @@ export default function App () {
 
   return (
     <div className="h-screen flex flex-col bg-void">
+      <DoctorBanner />
       <header className="flex items-center justify-between px-6 py-4 border-b border-linea">
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-magenta animate-pulse" />
