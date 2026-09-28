@@ -33,6 +33,8 @@ Todo con una **cola de trabajos** que muestra progreso en vivo, permite cancelar
 
 ## Requisitos previos
 
+**Node 24** (Vite 8 pide 20.19 o superior) y Python 3.10+.
+
 Además de Node y Python, el pipeline necesita estos binarios y modelos **fuera de npm/pip**:
 
 | Dependencia | Para qué | Cómo se instala |

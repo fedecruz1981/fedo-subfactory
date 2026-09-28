@@ -15,7 +15,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Node 20 se queda corto: Vite 8 pide 20.19+
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
