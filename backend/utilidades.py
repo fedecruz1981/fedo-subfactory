@@ -7,6 +7,8 @@ import tempfile
 CARPETA_BASE = os.path.join(tempfile.gettempdir(), 'subfactory')
 
 def sanitizar_nombre(nombre):
+    if not nombre:
+        return 'video'
     nombre = re.sub(r'[<>:"/\\|?*]', '_', nombre)
     nombre = re.sub(r'\s+', ' ', nombre).strip()
     return nombre[:200] if nombre else 'video'
@@ -31,6 +33,7 @@ def listar_jobs_temporales():
     return os.listdir(CARPETA_BASE)
 
 def guardar_estado(job_id, estado):
+    crear_carpeta_job(job_id)
     ruta = os.path.join(CARPETA_BASE, job_id, 'estado.json')
     with open(ruta, 'w', encoding='utf-8') as f:
         json.dump(estado, f, ensure_ascii=False, indent=2)
@@ -40,7 +43,10 @@ def cargar_estado(job_id):
     if not os.path.exists(ruta):
         return None
     with open(ruta, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        try:
+            return json.load(f)
+        except (json.JSONDecodeError, ValueError):
+            return None
 
 def listar_jobs_pendientes():
     jobs = []
