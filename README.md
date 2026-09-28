@@ -31,6 +31,20 @@ Todo con una **cola de trabajos** que muestra progreso en vivo, permite cancelar
 
 > Las claves API se leen desde variables de entorno del sistema (ej. `GEMINI_API_KEY`). No se guardan en el repositorio.
 
+## Requisitos previos
+
+Además de Node y Python, el pipeline necesita estos binarios y modelos **fuera de npm/pip**:
+
+| Dependencia | Para qué | Cómo se instala |
+|-------------|----------|-----------------|
+| **ffmpeg / ffprobe** | Descarga, merge de audio/video, incrustado de subtítulos | Windows: [ffmpeg.org](https://ffmpeg.org/download.html) y agregarlo al PATH · macOS: `brew install ffmpeg` · Linux: `sudo apt install ffmpeg` |
+| **yt-dlp** | Descarga de los videos | `pip install -U yt-dlp` (o el paquete del backend) |
+| **Whisper** | Transcripción del audio | `pip install -U openai-whisper` — la primera corrida descarga el modelo (~150 MB para `base`, ~1.5 GB para `large`) al directorio de cache de Whisper |
+| **CUDA (opcional)** | Acelera la transcripción en GPU NVIDIA | Drivers NVIDIA + `pip install -U torch` con build CUDA |
+
+En Windows, `ffmpeg` tiene que estar **en el PATH del sistema** antes de abrir la app:
+el sidecar Python lo invoca por nombre, no por ruta absoluta.
+
 ## Instalación
 
 ```bash
@@ -47,6 +61,12 @@ cd ..
 
 ```bash
 npm run dev
+```
+
+## Calidad
+
+```bash
+npm run lint
 ```
 
 ## Construcción
