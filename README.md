@@ -6,6 +6,8 @@
 
 ## Descargas
 
+**Windows x64 primero** — El instalador es para Windows x64 y requiere el runtime de .NET 8 (incluido en el instalador NSIS).
+
 Instalador para Windows (x64).
 
 | Versión | Archivo | Tamaño |
@@ -13,6 +15,8 @@ Instalador para Windows (x64).
 | [0.1.1](https://github.com/fedecruz1981/fedo-subfactory/releases/tag/v0.1.1) | `Fabrica.de.Subtitulos.Setup.0.1.1.exe` | 106,7 MB |
 
 [Todas las releases](https://github.com/fedecruz1981/fedo-subfactory/releases) · [reportar un problema](https://github.com/fedecruz1981/fedo-subfactory/issues)
+
+> **Aviso legal — YouTube**: Esta herramienta usa `yt-dlp` para descargar videos. Los Términos de Servicio de YouTube prohíben la descarga de contenido sin autorización expresa del titular de derechos. Úsala solo para contenido propio, de dominio público, o con licencia que lo permita. El autor no se responsabiliza del uso indebido.
 
 ## Qué hace
 
