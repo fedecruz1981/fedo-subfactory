@@ -2,7 +2,17 @@
 
 **Fábrica de Subtítulos** — aplicación de escritorio que descarga videos, transcribe el audio, traduce las voces y genera/incrusta subtítulos.
 
-![estado](https://img.shields.io/badge/version-0.1.0-blue)
+![estado](https://img.shields.io/badge/version-0.1.1-blue)
+
+## Descargas
+
+Instalador para Windows (x64).
+
+| Versión | Archivo | Tamaño |
+|---------|---------|--------|
+| [0.1.1](https://github.com/fedecruz1981/fedo-subfactory/releases/tag/v0.1.1) | `Fabrica.de.Subtitulos.Setup.0.1.1.exe` | 106,7 MB |
+
+[Todas las releases](https://github.com/fedecruz1981/fedo-subfactory/releases) · [reportar un problema](https://github.com/fedecruz1981/fedo-subfactory/issues)
 
 ## Qué hace
 
