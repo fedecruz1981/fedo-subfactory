@@ -496,9 +496,11 @@ def test_nllb_respuesta_mas_corta_usa_original(nllb):
 
 
 def test_nllb_carga_el_modelo_int8_de_facebook(monkeypatch):
-    """Verifica el modelo y compute_type usados al cargar por primera vez."""
-    import ctranslate2
+    """Verifica el modelo y compute_type usados al cargar por primera vez.
 
+    No se importa ctranslate2 real: se inyecta un doble en sys.modules para que
+    el test corra en CI sin la dependencia nativa instalada.
+    """
     from traductores.nllb import TraductorNLLB
 
     capturados = {}
