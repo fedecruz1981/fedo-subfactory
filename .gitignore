@@ -36,3 +36,9 @@ desktop.ini
 *.mp4
 *.mov
 *.mkv
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/
