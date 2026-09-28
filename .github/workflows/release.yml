@@ -1,0 +1,79 @@
+name: Release
+
+# Publica el instalador NSIS cada vez que se empuja un tag v*.
+# Los 79 tests del backend y los smoke tests de Electron ya corren en
+# ci.yml en cada push a main, asi que aca solo se repite el lint.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag a publicar, por ejemplo v1.0.2'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar que el tag coincide con la version
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "$TAG" != "v$VERSION" ]; then
+            echo "::error::el tag $TAG no coincide con la version $VERSION de package.json"
+            exit 1
+          fi
+          echo "Publicando $TAG (package.json $VERSION)"
+
+      - name: Lint
+        run: npm run lint -- --quiet
+
+      - name: Compilar instalador
+        # --publish never es obligatorio: con un tag presente, electron-builder
+        # intenta publicar la release por su cuenta y falla porque en este paso
+        # todavia no hay GH_TOKEN. La publicacion la hace el paso de abajo.
+        run: npm run dist -- --publish never
+
+      - name: Publicar release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          ASSET=$(ls -t release/*.exe | grep -vi uninstaller | head -n 1)
+          if [ -z "$ASSET" ]; then
+            echo "::error::no se encontro ningun instalador en release/"
+            ls -la release/ || true
+            exit 1
+          fi
+          echo "Adjuntando $ASSET"
+          gh release create "$TAG" "$ASSET" \
+            --verify-tag \
+            --generate-notes \
+            --title "$TAG"
