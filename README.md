@@ -115,7 +115,7 @@ fedo-subfactory/
 
 ## Estado
 
-Versión 0.1.0 en desarrollo: el flujo de descarga → transcripción → traducción → render funciona de punta a punta, y queda pendiente pulir la incrustación de subtítulos y empaquetado multiplataforma.
+Versión **0.1.1** publicada (instalador NSIS para Windows x64). El flujo de descarga → transcripción → traducción → render funciona de punta a punta, con cola de trabajos, cancelación, reintentos y retomado. Pendiente: incrustación de subtítulos por pulir y empaquetado multiplataforma.
 
 ## Licencia
 
