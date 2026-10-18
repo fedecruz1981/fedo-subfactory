@@ -118,6 +118,36 @@ fedo-subfactory/
 
 Versión **0.1.2** publicada (instalador NSIS para Windows x64). El flujo de descarga → transcripción → traducción → render funciona de punta a punta, con cola de trabajos, cancelación, reintentos y retomado. Pendiente: incrustación de subtítulos por pulir y empaquetado multiplataforma.
 
+## Privacidad
+
+La app corre en tu equipo y no envía nada a servidores del autor. Ahora bien, según el motor de
+traducción que elijas, el **texto de los subtítulos** puede salir de tu máquina:
+
+| Motor | Qué se envía | A dónde |
+|---|---|---|
+| Google Translate | El texto de los subtítulos | Servidores de Google (vía `deep-translator`) |
+| LLM (OpenAI / Groq / Gemini) | El texto de los subtítulos | Al proveedor elegido, con **tu** clave API |
+| NLLB (local) | Nada | Corre en tu equipo |
+
+- La descarga (`yt-dlp`) y la transcripción (Whisper) corren localmente; la descarga, obviamente,
+  se conecta a YouTube.
+- Las claves API que cargues quedan guardadas en la configuración local de la app.
+- Al usar esos servicios aceptás sus términos y sus políticas de privacidad.
+- No proceses contenido de terceros sin autorización: los subtítulos traducidos son una obra
+  derivada.
+
 ## Licencia
 
-MIT
+MIT — ver [`LICENSE`](./LICENSE).
+
+Componentes de terceros (Electron/Chromium, React, faster-whisper, CTranslate2, yt-dlp, FFmpeg,
+etc.): ver [`THIRD-PARTY.md`](./THIRD-PARTY.md). Ojo: el modelo **NLLB-200** es CC-BY-NC-4.0
+(**solo uso no comercial**).
+
+## Aviso legal
+
+- **Sin relación con YouTube, Google ni Meta.** Proyecto independiente, sin afiliación ni aval.
+- **Uso responsable.** Descargá y traducí solo contenido que puedas usar (ver el aviso de YouTube
+  más arriba). Sos responsable del contenido que procesás y de su difusión.
+- **Sin garantías.** El software se entrega «tal cual», sin garantía de ningún tipo (ver
+  `LICENSE`).

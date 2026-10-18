@@ -3,6 +3,7 @@
   "productName": "Fábrica de Subtítulos",
   "version": "0.1.2",
   "author": "federico-ariel-cruz",
+  "license": "MIT",
   "description": "Descarga, transcribe, traduce y incrusta subtítulos en videos",
   "main": "electron/main.js",
   "scripts": {
