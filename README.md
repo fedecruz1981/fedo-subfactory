@@ -2,16 +2,17 @@
 
 **Fábrica de Subtítulos** — aplicación de escritorio que descarga videos, transcribe el audio, traduce las voces y genera/incrusta subtítulos.
 
-![estado](https://img.shields.io/badge/version-0.1.1-blue)
+![estado](https://img.shields.io/badge/version-0.1.2-blue)
 
 ## Descargas
 
-**Windows x64 primero** — El instalador es para Windows x64 y requiere el runtime de .NET 8 (incluido en el instalador NSIS).
+**Windows x64 primero** — El instalador NSIS es para Windows x64.
 
 Instalador para Windows (x64).
 
 | Versión | Archivo | Tamaño |
 |---------|---------|--------|
+| [0.1.2](https://github.com/fedecruz1981/fedo-subfactory/releases/tag/v0.1.2) | `Fabrica.de.Subtitulos.Setup.0.1.2.exe` | 106,8 MB |
 | [0.1.1](https://github.com/fedecruz1981/fedo-subfactory/releases/tag/v0.1.1) | `Fabrica.de.Subtitulos.Setup.0.1.1.exe` | 106,7 MB |
 
 [Todas las releases](https://github.com/fedecruz1981/fedo-subfactory/releases) · [reportar un problema](https://github.com/fedecruz1981/fedo-subfactory/issues)
@@ -115,7 +116,7 @@ fedo-subfactory/
 
 ## Estado
 
-Versión **0.1.1** publicada (instalador NSIS para Windows x64). El flujo de descarga → transcripción → traducción → render funciona de punta a punta, con cola de trabajos, cancelación, reintentos y retomado. Pendiente: incrustación de subtítulos por pulir y empaquetado multiplataforma.
+Versión **0.1.2** publicada (instalador NSIS para Windows x64). El flujo de descarga → transcripción → traducción → render funciona de punta a punta, con cola de trabajos, cancelación, reintentos y retomado. Pendiente: incrustación de subtítulos por pulir y empaquetado multiplataforma.
 
 ## Licencia
 
